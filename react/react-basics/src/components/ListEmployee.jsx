@@ -4,19 +4,20 @@ import { useNavigate } from "react-router-dom";
 function ListEmployee() {
   const [employees, setEmployee] = useState([]);
   const navigator = useNavigate();
+
   useEffect(() => {
     listAllEmployee();
   }, []);
 
-  function listAllEmployee() {
-    listEmployees()
-      .then((response) => {
-        setEmployee(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  async function listAllEmployee() {
+    try {
+      let response = await listEmployees();
+      setEmployee(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   }
+
   function addNewEmployee() {
     navigator("/add-employee");
   }
